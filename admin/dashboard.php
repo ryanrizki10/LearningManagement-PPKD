@@ -14,7 +14,7 @@ if (empty($_SESSION['EMAIL'])) {
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Components / Accordion - NiceAdmin Bootstrap Template</title>
+    <title>Learning Management Systems PPKD</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
