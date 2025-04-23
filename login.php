@@ -1,26 +1,30 @@
-<?php
+<?php 
 session_start();
 include "koneksi.php";
 
 if (isset($_POST['login'])) {
-    $email      = $_POST['email'];
-    $password   = sha1($_POST['password']);
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+  
+  $login = mysqli_query($koneksi, "SELECT * FROM users WHERE email = '$email'");
+  
+  // jika email ditemukan
+  if (mysqli_num_rows($login) > 0) {
+    //buat data user
+    $rowUser = mysqli_fetch_assoc($login);
+    // var_dump($rowUser);
+    // die();
+    
+    if ($rowUser['password'] == $password) {
+      $_SESSION['EMAIL'] = $rowUser['email'];
+      $_SESSION['ID_USER'] = $rowUser['id'];
+      $_SESSION['NAME'] = $rowUser['name'];
 
-    $login = mysqli_query($koneksi, "SELECT * FROM users WHERE email ='$email'");
-    // jika email ditemukan
-    if (mysqli_num_rows($login) > 0) {
-        // buat data user
-        $rowUser = mysqli_fetch_assoc($login);
-        if ($rowUser['password'] == $password) {
-            $_SESSION['ID_USER'] = $rowUser['id'];
-            $_SESSION['NAME'] = $rowUser['name'];
-
-            header("location:dashboard.php");
-        }
-    } else {
-
-        header("location:index.php?login=error");
+      header("Location:admin/dashboard.php");
     }
+  }else {
+    header("Location:login.php?login=error");
+  }
 }
 
 ?>

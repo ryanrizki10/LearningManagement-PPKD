@@ -46,7 +46,7 @@ if (empty($_SESSION['EMAIL'])) {
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 </head>
-
+    <?php include '../inc/head.php'; ?>
 <body>
 
     <!-- ======= Header ======= -->
@@ -57,7 +57,7 @@ if (empty($_SESSION['EMAIL'])) {
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Whats Up Fellas!!!</h1>
+            <h1 style="color:white;">Whats Up Fellas!!!</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
