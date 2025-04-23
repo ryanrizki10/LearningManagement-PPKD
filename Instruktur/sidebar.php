@@ -13,7 +13,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
     
             <li class="nav-item">
-                <a class="nav-link collapsed" href="../instruktur/dashboard_ins.php">
+                <a class="nav-link collapsed" href="../siswa/dashboard_sis.php">
                     <i class="bi bi-grid"></i>
                     <span class="judul">Dashboard</span>
                 </a>

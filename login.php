@@ -31,9 +31,12 @@ if (isset($_POST['login'])) {
                     header("Location: instruktur/dashboard_ins.php");
                     break;
                 case 4:
-                    header("Location: dashboard_administrator.php");
+                    header("Location: instruktur/dashboard_ins.php");
                     break;
                 case 6:
+                    header("Location: siswa/dashboard_sis.php");
+                    break;
+                case 7:
                     header("Location: siswa/dashboard_sis.php");
                     break;
                 default:

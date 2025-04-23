@@ -56,7 +56,7 @@ if (isset($_GET['idDel'])) {
     $id = $_GET['idDel'];
 
 
-    $cekFOTO = mysqli_query($koneksi, "SELECT photo FROM instructors WHERE id = $id");
+    $cekFOTO = mysqli_query($koneksi, "SELECT photo FROM students WHERE id = $id");
     $rowcekFoto = mysqli_fetch_assoc($cekFOTO);
     if ($rowcekFoto && file_exists("../assets/uploads/" . $fotoLama['photo'])) {
         unlink("../assets/uploads/" . $rowcekFoto['photo']);
@@ -133,7 +133,7 @@ if (isset($_GET['idDel'])) {
                       <td><img width="150" src="../assets/uploads/<?= $student['photo'] ?>" alt=""></td>
                       <td><?= $student['is_active'] ?></td>
                       <td><a href="edit-siswa.php?Edit=<?php echo $student['id'] ?>" class="btn btn-success btn-sm"><i class="bi bi-pencil-fill"></i></a>
-                      <a onclick="return confirm ('Yakin ingin menghapus?')" href="instruktur.php?idDel=<?php echo $student['id'] ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                      <a onclick="return confirm ('Yakin ingin menghapus?')" href="siswa.php?idDel=<?php echo $student['id'] ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                       </td>
                     </tr>
                   <?php

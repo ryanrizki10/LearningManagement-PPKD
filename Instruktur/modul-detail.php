@@ -6,13 +6,21 @@ include '../koneksi.php';
 if (empty($_SESSION['EMAIL'])) {
   header("Location: ../login.php");
 }
-
 $queryLmd = mysqli_query($koneksi, "SELECT  l.*,u.name FROM learning_modul_details l
 LEFT JOIN
     learning_moduls u ON l.learning_modul_id = u.id");
 $Lmd = mysqli_fetch_all($queryLmd, MYSQLI_ASSOC);
 
 
+
+if (isset($_GET['idDel'])) {
+  $id = $_GET['idDel'];
+
+  $del = mysqli_query($koneksi, "DELETE FROM learning_modul_details WHERE id = $id");
+  if ($del) {
+    header("Location: modul-detail.php?delete=berhasil");
+  }
+}
 
 
 
@@ -51,7 +59,7 @@ $Lmd = mysqli_fetch_all($queryLmd, MYSQLI_ASSOC);
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Module</h5>
+              <h5 class="card-title">Detail Module</h5>
               <div class="table table-responsive">
                 <table class="table table-bordered">
                   <tr>
@@ -60,6 +68,7 @@ $Lmd = mysqli_fetch_all($queryLmd, MYSQLI_ASSOC);
                     <th>File Name Module</th>
                     <th>File</th>
                     <th>Reference Link</th>
+                    <th>Actions</th>
                   </tr>
                   <?php
                   $no = 1;
@@ -71,7 +80,10 @@ $Lmd = mysqli_fetch_all($queryLmd, MYSQLI_ASSOC);
                       <td><?= $lmdt['file_name'] ?></td>
                       <td><a href="../assets/uploads/<?= $lmdt['file'] ?>" target="_blank">Lihat PDF</a></td>
                       <td><?= $lmdt['reference_link'] ?></td>
-                      
+                      <td><a href="print.php" class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i></a>
+                      <a href="edit-module.php?Edit=<?php echo $lmdt['id'] ?>" class="btn btn-success btn-sm"><i class="bi bi-pencil-fill"></i></a>
+                      <a onclick="return confirm ('Yakin ingin menghapus?')" href="modul-detail.php?idDel=<?php echo $lmdt['id'] ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                      </td>
                     </tr>
                   <?php
                   } ?>

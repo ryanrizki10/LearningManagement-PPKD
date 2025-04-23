@@ -67,7 +67,7 @@ $rowUsers = mysqli_fetch_all($user, MYSQLI_ASSOC);
   <!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-  <?php include "../siswa/inc/sidebar.php"; ?>
+  <?php include "../instruktur/inc/sidebar.php"; ?>
   <!-- End Sidebar-->
 
   <main id="main" class="main">
