@@ -1,30 +1,50 @@
-<?php 
+<?php
 session_start();
 include "koneksi.php";
 
 if (isset($_POST['login'])) {
-  $email = $_POST['email'];
-  $password = $_POST['password'];
-  
-  $login = mysqli_query($koneksi, "SELECT * FROM users WHERE email = '$email'");
-  
-  // jika email ditemukan
-  if (mysqli_num_rows($login) > 0) {
-    //buat data user
-    $rowUser = mysqli_fetch_assoc($login);
-    // var_dump($rowUser);
-    // die();
-    
-    if ($rowUser['password'] == $password) {
-      $_SESSION['EMAIL'] = $rowUser['email'];
-      $_SESSION['ID_USER'] = $rowUser['id'];
-      $_SESSION['NAME'] = $rowUser['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-      header("Location:admin/dashboard.php");
+    $login = mysqli_query($koneksi, "SELECT * FROM users WHERE email = '$email'");
+
+    // jika email ditemukan
+    if (mysqli_num_rows($login) > 0) {
+        //buat data user
+        $rowUser = mysqli_fetch_assoc($login);
+        // var_dump($rowUser);
+        // die();
+
+        if ($rowUser['password'] == $password) {
+            $_SESSION['EMAIL'] = $rowUser['email'];
+            $_SESSION['ID_USER'] = $rowUser['id'];
+            $_SESSION['NAME'] = $rowUser['name'];
+
+            switch ($rowUser['id']) {
+                case 1:
+                    header("Location: superAdmin/dashboard.php");
+                    break;
+                case 2:
+                    header("Location: admin/dashboard_adm.php");
+                    break;
+                case 8:
+                    header("Location: instruktur/dashboard_ins.php");
+                    break;
+                case 4:
+                    header("Location: dashboard_administrator.php");
+                    break;
+                case 6:
+                    header("Location: siswa/dashboard_sis.php");
+                    break;
+                default:
+                    header("Location: index.php?login=unauthorized");
+                    break;
+            }
+            exit();
+        }
+    } else {
+        header("Location:login.php?login=error");
     }
-  }else {
-    header("Location:login.php?login=error");
-  }
 }
 
 ?>
@@ -45,7 +65,9 @@ if (isset($_POST['login'])) {
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -73,7 +95,8 @@ if (isset($_POST['login'])) {
     <main>
         <div class="container">
 
-            <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <section
+                class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
@@ -98,7 +121,8 @@ if (isset($_POST['login'])) {
                                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                             <i class="bi bi-exclamation-octagon me-1"></i>
                                             Invalid Credential!!
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
                                         </div>
                                     <?php endif ?>
                                     <form method="post" class="row g-3 needs-validation" novalidate>
@@ -106,25 +130,29 @@ if (isset($_POST['login'])) {
                                         <div class="col-12">
                                             <label for="yourUsername" class="form-label">Email</label>
                                             <div class="input-group has-validation">
-                                                <input type="email" name="email" class="form-control" id="yourUsername" required>
+                                                <input type="email" name="email" class="form-control" id="yourUsername"
+                                                    required>
                                                 <div class="invalid-feedback">Please enter your email.</div>
                                             </div>
                                         </div>
 
                                         <div class="col-12">
                                             <label for="yourPassword" class="form-label">Password</label>
-                                            <input type="password" name="password" class="form-control" id="yourPassword" required>
+                                            <input type="password" name="password" class="form-control"
+                                                id="yourPassword" required>
                                             <div class="invalid-feedback">Please enter your password!</div>
                                         </div>
 
                                         <div class="col-12">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
+                                                <input class="form-check-input" type="checkbox" name="remember"
+                                                    value="true" id="rememberMe">
                                                 <label class="form-check-label" for="rememberMe">Remember me</label>
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <button name="login" class="btn btn-primary w-100" type="submit">Login</button>
+                                            <button name="login" class="btn btn-primary w-100"
+                                                type="submit">Login</button>
                                         </div>
                                     </form>
 
@@ -136,7 +164,7 @@ if (isset($_POST['login'])) {
                                 <!-- You can delete the links only if you purchased the pro version. -->
                                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                                 <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                                Designed by <a href="https://bootstrapmade.com/">Reza Ibrahim</a>
+                                Designed by <a href="https://bootstrapmade.com/">Ryan Rizki</a>
                             </div>
 
                         </div>
@@ -148,7 +176,8 @@ if (isset($_POST['login'])) {
         </div>
     </main><!-- End #main -->
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>

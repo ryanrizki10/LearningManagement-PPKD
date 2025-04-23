@@ -19,12 +19,14 @@ if (empty($_SESSION['EMAIL'])) {
     header("Location: ../login.php");
 }
 
-$major = mysqli_query($koneksi, "SELECT * FROM majors");
-$rows = mysqli_fetch_all($major, MYSQLI_ASSOC);
+$role = mysqli_query($koneksi, "SELECT * FROM roles");
+$rows = mysqli_fetch_all($role, MYSQLI_ASSOC);
 
+$userRole = mysqli_query($koneksi, "SELECT * FROM user_role");
+$rowURoles = mysqli_fetch_all($userRole, MYSQLI_ASSOC);
 
-
-
+$user = mysqli_query($koneksi, "SELECT * FROM users");
+$rowUsers = mysqli_fetch_all($user, MYSQLI_ASSOC);
 
 
 
@@ -33,9 +35,9 @@ if (isset($_GET['idDel'])) {
     $id = $_GET['idDel'];
 
 
-    $del = mysqli_query($koneksi, "DELETE FROM majors WHERE id = $id");
+    $del = mysqli_query($koneksi, "DELETE FROM roles WHERE id = $id");
     if ($del) {
-        header("Location: major.php");
+        header("Location: role.php");
     }
 }
 
@@ -52,20 +54,31 @@ if (isset($_GET['idDel'])) {
     <!-- End Header -->
 
     <!-- ======= Sidebar ======= -->
-    <?php include "../inc/sidebar.php"; ?>
+    <?php include "../admin/inc/sidebar.php"; ?>
     <!-- End Sidebar-->
 
     <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>Admin</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="dashboard.php">Admin</a></li>
+                    <li class="breadcrumb-item">Pages</li>
+                    <li class="breadcrumb-item active">Blank</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
 
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Data User</h3>
+                        <h3>Role Data</h3>
                     </div>
                     <div class="card-body">
                         <div align="right" class="mb-3 mt-3">
-                            <a href="edit-major.php" class="btn btn-primary">Create</a>
+                            <a href="edit-role.php" class="btn btn-primary">Create</a>
                         </div>
                         <table class="table table-bordered">
                             <thead>
@@ -84,11 +97,11 @@ if (isset($_GET['idDel'])) {
                                         <td><?php echo $row['name'] ?></td>
                                         <td><?php echo $row['is_active'] ?></td>
                                         <td>
-                                            <a href="edit-major.php?Edit=<?php echo $row['id'] ?>" class="btn btn-primary btn-sm"><i class="bi bi-pencil-fill"></i></a>
+
                                             <a href="edit-user.php?Edit=<?php echo $row['id'] ?>"
-                                                class="btn btn-success btn-sm"><i class="bi bi-eye-fill"></i></a>
+                                                class="btn btn-success btn-sm"><i class="bi bi-pencil-fill"></i></a>
                                             <a onclick="return confirm ('Yakin ingin menghapus?')"
-                                                href="user.php?idDel=<?php echo $row['id'] ?>"
+                                                href="role.php?idDel=<?php echo $row['id'] ?>"
                                                 class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                                         </td>
                                     </tr>
@@ -98,6 +111,8 @@ if (isset($_GET['idDel'])) {
                     </div>
                 </div>
             </div>
+
+
         </div>
 
     </main>

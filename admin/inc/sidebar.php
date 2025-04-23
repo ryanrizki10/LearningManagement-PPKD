@@ -13,7 +13,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
     
             <li class="nav-item">
-                <a class="nav-link collapsed" href="../admin/dashboard.php">
+                <a class="nav-link collapsed" href="../admin/dashboard_adm.php">
                     <i class="bi bi-grid"></i>
                     <span class="judul">Dashboard</span>
                 </a>
@@ -24,56 +24,30 @@
                     <i class="bi bi-menu-button-wide"></i><span class="judul">Master Data</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+               
                     <li>
-                        <a href="../superAdmin/user.php">
-                            <i class=" bi bi-circle"></i><span>User</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../superAdmin/major.php">
+                        <a href="../admin/major_adm.php">
                             <i class="bi bi-circle"></i><span>Jurusan</span>
                         </a>
                     </li>
                     <li>
-                        <a href="../superAdmin/role.php">
+                        <a href="../admin/role_adm.php">
                             <i class="bi bi-circle"></i><span>Role</span>
                         </a>
                     </li>
                     <li>
-                        <a href="../superAdmin/instruktur.php">
+                        <a href="instruktur_adm.php">
                             <i class="bi bi-circle"></i><span>Instruktur</span>
                         </a>
                     </li>
                     <li>
-                        <a href="../superAdmin/siswa.php">
+                        <a href="siswa_adm.php">
                             <i class="bi bi-circle"></i><span>Siswa</span>
                         </a>
                     </li>
                 </ul>
             </li><!-- End Components Nav -->
     
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-journal-text"></i><span class="judul">Manajemen Modul</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="modul.php">
-                            <i class="bi bi-circle"></i><span>Module</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="modul-detail.php">
-                            <i class="bi bi-circle"></i><span>Module Details</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="modul-siswa.php">
-                            <i class="bi bi-circle"></i><span>Module Siswa</span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End Forms Nav -->
         </ul>
     </aside><!-- End Sidebar-->
 </body>

@@ -53,7 +53,7 @@ if (isset($_POST['edit'])) {
   <!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-  <?php  include "../inc/sidebar.php"; ?>
+  <?php include "../admin/inc/sidebar.php"; ?>
   <!-- End Sidebar-->
 
   <main id="main" class="main">

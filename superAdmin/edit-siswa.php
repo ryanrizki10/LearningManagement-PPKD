@@ -11,10 +11,9 @@ if (empty($_SESSION['EMAIL'])) {
 if (isset($_POST['save'])) {
   $major_id = $_POST['majors_id'];
   $user_id = $_POST['user_id'];
-  $title = $_POST['title'];
   $gender = $_POST['gender'];
-  $address = $_POST['address'];
-  $phone = $_POST['phone'];
+  $date_of_birth = $_POST['date_of_birth'];
+  $place_of_birth = $_POST['place_of_birth'];
   $status = $_POST['is_active'];
   $photo = $_FILES['photo'];
 
@@ -25,9 +24,9 @@ if (isset($_POST['save'])) {
     $filePath = "../assets/uploads/" . $fileName;
     move_uploaded_file($photo['tmp_name'], $filePath);
     
-    $insert = mysqli_query($koneksi, "INSERT INTO instructors (`majors_id`, `user_id`, `title`, `gender`, `address`, `phone`, `is_active`, `photo`) VALUES ('$major_id', '$user_id', '$title', '$gender', '$address', '$phone', '$status', '$fileName')");
+    $insert = mysqli_query($koneksi, "INSERT INTO students (`majors_id`, `user_id`, `gender`, `date_of_birth`, `place_of_birth`, `is_active`, `photo`) VALUES ('$major_id', '$user_id', '$gender', '$date_of_birth', '$place_of_birth', '$status', '$fileName')");
     if ($insert) {
-      header("Location: instruktur_adm.php");
+      header("Location: siswa.php?save=berhasil");
     }
     
   }
@@ -36,7 +35,7 @@ if (isset($_POST['save'])) {
 if (isset($_GET['Edit'])) {
   $id = $_GET['Edit'];
   
-  $qEdit = mysqli_query($koneksi, "SELECT * FROM instructors WHERE id = $id");
+  $qEdit = mysqli_query($koneksi, "SELECT * FROM students WHERE id = $id");
   $rowUpdate = mysqli_fetch_assoc($qEdit); 
 }
 
@@ -44,10 +43,9 @@ if (isset($_POST['edit'])) {
   $id = $_GET['Edit'];
   $major_id = $_POST['majors_id'];
   $user_id = $_POST['user_id'];
-  $title = $_POST['title'];
   $gender = $_POST['gender'];
-  $address = $_POST['address'];
-  $phone = $_POST['phone'];
+  $date_of_birth = $_POST['date_of_birth'];
+  $place_of_birth = $_POST['place_of_birth'];
   $status = $_POST['is_active'];
   $photo = $_FILES['photo'];
   
@@ -56,7 +54,7 @@ if (isset($_POST['edit'])) {
     $fileName = uniqid() . "_" . basename($photo['name']);
     $filePath = "../assets/uploads/" . $fileName;
     if (move_uploaded_file($photo['tmp_name'], $filePath)){
-      $cekFoto = mysqli_query($koneksi, "SELECT photo FROM instructors WHERE id =$id");
+      $cekFoto = mysqli_query($koneksi, "SELECT photo FROM students WHERE id =$id");
       $fotoLama = mysqli_fetch_assoc($cekFoto);
       if ($fotoLama && file_exists("../assets/uploads/" . $fotoLama['photo'])) {
         unlink("../assets/uploads/" . $fotoLama['photo']);
@@ -67,9 +65,9 @@ if (isset($_POST['edit'])) {
     }
   }
   
-  $qUpdate = mysqli_query($koneksi, "UPDATE instructors SET $fillQupdate majors_id='$major_id', user_id='$user_id', title='$title', gender='$gender', address='$address', phone='$phone', is_active='$status'  WHERE id = $id");
+  $qUpdate = mysqli_query($koneksi, "UPDATE students SET $fillQupdate majors_id='$major_id', user_id='$user_id', gender='$gender', date_of_birth='$date_of_birth', place_of_birth='$place_of_birth', is_active='$status'  WHERE id = $id");
   if ($qUpdate){
-    header("Location: instruktur_adm.php");
+    header("Location: siswa.php?update=berhasil");
   }
 }
 
@@ -94,7 +92,7 @@ $rowUsers = mysqli_fetch_all($user, MYSQLI_ASSOC);
   <!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-  <?php include "../admin/inc/sidebar.php"; ?>
+  <?php  include "../inc/sidebar.php"; ?>
   <!-- End Sidebar-->
 
   <main id="main" class="main">
@@ -116,7 +114,7 @@ $rowUsers = mysqli_fetch_all($user, MYSQLI_ASSOC);
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title"><?php echo isset($_GET['Edit']) ? 'Edit ' : 'Create New ' .' '?>Instruktur</h5>
+              <h5 class="card-title"><?php echo isset($_GET['Edit']) ? 'Edit ' : 'Create New ' .' '?>Siswa</h5>
               <form action="" method="post" enctype="multipart/form-data">
                 <div class="row">
                   <div class="col-sm-6">
@@ -146,27 +144,17 @@ $rowUsers = mysqli_fetch_all($user, MYSQLI_ASSOC);
                         <?php } ?>
                         </select>
                       </div>
-                    </div>
+                    </div>                 
 
                     
-
-                    <div class="mb-3 row">
-                      <div class="col-sm-3">
-                        <label for="">Title</label>
-                      </div>
-                      <div class="col-sm-6">
-                        <input type="text" class="form-control" name="title" placeholder="Input your title (ex:S.Kom)" value="<?php echo isset($_GET['Edit']) ? $rowUpdate['title'] : '' ?>">
-                      </div>
-                    </div>
-
                     <div class="mb-3 row">
                       <div class="col-sm-3">
                         <label for="">Gender</label>
                       </div>
                       <div class="col-sm-6">
-                        <select name="" id="" value="<?php echo isset($_GET['Edit']) ? $rowUpdate['gender'] : '' ?>">
+                        <select name="" id="" >
                           <option value="" hidden>Choose</option>
-                          <option value="1">Man</option>
+                          <option value="<?php echo isset($_GET['Edit']) ? $rowUpdate['gender'] : '' ?>">Man</option>
                           <option value="0">Woman</option>
                         </select>
                       </div>
@@ -176,19 +164,19 @@ $rowUsers = mysqli_fetch_all($user, MYSQLI_ASSOC);
                   <div class="col-sm-6">
                     <div class="mb-3 row">
                       <div class="col-sm-3">
-                        <label for="">Address</label>
+                        <label for="">Date of Birth</label>
                       </div>
                       <div class="col-sm-6">
-                        <input type="text" class="form-control" name="address" placeholder="Input your address" value="<?php echo isset($_GET['Edit']) ? $rowUpdate['address'] : '' ?>">
+                        <input type="date" class="form-control" name="date_of_birth" required value="<?php echo isset($_GET['Edit']) ? $rowUpdate['date_of_birth'] : '' ?>">
                       </div>
                     </div>
 
                     <div class="mb-3 row">
                       <div class="col-sm-3">
-                        <label for="">Phone</label>
+                        <label for="">Place of Birth</label>
                       </div>
                       <div class="col-sm-6">
-                        <input type="number" class="form-control" name="phone" placeholder="Input your phone" value="<?php echo isset($_GET['Edit']) ? $rowUpdate['phone'] : '' ?>">
+                        <input type="text" class="form-control" name="place_of_birth" placeholder="Input your place of birth" required value="<?php echo isset($_GET['Edit']) ? $rowUpdate['place_of_birth'] : '' ?>">
                       </div>
                     </div>
 
@@ -213,9 +201,9 @@ $rowUsers = mysqli_fetch_all($user, MYSQLI_ASSOC);
                         <label for="">Status</label>
                       </div>
                       <div class="col-sm-6">
-                        <select name="is_active" id="" value="<?php echo isset($_GET['Edit']) ? $rowUpdate['is_active'] : '' ?>">
+                      <select name="" id="" >
                           <option value="" hidden>Choose</option>
-                          <option value="1">Active</option>
+                          <option value="<?php echo isset($_GET['Edit']) ? $rowUpdate['is_active'] : '' ?>">Active</option>
                           <option value="0">Non Active</option>
                         </select>
                       </div>

@@ -15,7 +15,7 @@ if (isset($_POST['save'])) {
   $insert = mysqli_query($koneksi, "INSERT INTO majors (name, is_active) VALUES ('$name', '$is_active')");
 
   if ($insert) {
-    header("Location: major_adm.php");
+    header("Location: major.php");
   } else {
     header("Location: edit-major.php");
   }
@@ -35,7 +35,7 @@ if (isset($_POST['edit'])) {
 
   $qUpdate = mysqli_query($koneksi, "UPDATE majors SET name='$name', is_active='$is_active' WHERE id = $id");
   if ($qUpdate){
-    header("Location: major_adm.php");
+    header("Location: major.php");
   }
 }
 
@@ -53,7 +53,7 @@ if (isset($_POST['edit'])) {
   <!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-  <?php include "../admin/inc/sidebar.php"; ?>
+  <?php  include "../inc/sidebar.php"; ?>
   <!-- End Sidebar-->
 
   <main id="main" class="main">

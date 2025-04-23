@@ -57,7 +57,7 @@ if (empty($_SESSION['EMAIL'])) {
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1 style="color:white;">Whats Up Fellas!!!</h1>
+            <h1 style="color:white;">Whats Up Min !!!</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>

@@ -48,7 +48,7 @@ if (isset($_GET['idDel'])) {
     unlink("../assets/uploads/" . $rowcekFoto['photo']);
     $delete = mysqli_query($koneksi, "DELETE FROM instructors WHERE id = $id");
     if ($delete) {
-      header("Location: instruktur.php");
+      header("Location: instruktur_adm.php");
     }
   }
 
@@ -67,7 +67,7 @@ if (isset($_GET['idDel'])) {
   <!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-  <?php  include "../inc/sidebar.php"; ?>
+  <?php include "../admin/inc/sidebar.php"; ?>
   <!-- End Sidebar-->
 
   <main id="main" class="main">
@@ -89,7 +89,7 @@ if (isset($_GET['idDel'])) {
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Instruktur</h5>
+              <h5 class="card-title">Data Instruktur</h5>
               <div class="table table-responsive">
                 <a class="btn btn-primary mb-2" href="edit-instruktur.php">CREATE</a>
                 <table class="table table-bordered">
@@ -119,8 +119,8 @@ if (isset($_GET['idDel'])) {
                       <td><?= $instructor['phone']?></td>
                       <td><img width="150" src="../assets/uploads/<?= $instructor['photo'] ?>" alt=""></td>
                       <td><?= $instructor['is_active'] ?></td>
-                      <td><a href="edit-instruktur.php?Edit=<?php echo $instructor['id'] ?>" class="btn btn-success btn-sm"><i class="bi bi-pencil-fill"></i></a>
-                      <a onclick="return confirm ('Yakin ingin menghapus?')" href="instruktur.php?idDel=<?php echo $instructor['id'] ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                      <td><a href="edit-instruktur_adm.php?Edit=<?php echo $instructor['id'] ?>" class="btn btn-success btn-sm"><i class="bi bi-pencil-fill"></i></a>
+                      <a onclick="return confirm ('Yakin ingin menghapus?')" href="instruktur_adm.php?idDel=<?php echo $instructor['id'] ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                       </td>
                     </tr>
                   <?php

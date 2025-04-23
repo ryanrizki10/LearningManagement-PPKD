@@ -12,19 +12,19 @@ if (isset($_POST['save'])) {
   $is_active = $_POST['is_active'];
   
 
-  $insert = mysqli_query($koneksi, "INSERT INTO majors (name, is_active) VALUES ('$name', '$is_active')");
+  $insert = mysqli_query($koneksi, "INSERT INTO roles (name, is_active) VALUES ('$name', '$is_active')");
 
   if ($insert) {
-    header("Location: major_adm.php");
+    header("Location: role.php");
   } else {
-    header("Location: edit-major.php");
+    header("Location: edit-role.php");
   }
 }
 
 if (isset($_GET['Edit'])) {
   $id = $_GET['Edit'];
 
-  $qEdit = mysqli_query($koneksi, "SELECT * FROM majors WHERE id = $id");
+  $qEdit = mysqli_query($koneksi, "SELECT * FROM roles WHERE id = $id");
   $rowUpdate = mysqli_fetch_assoc($qEdit); 
 }
 
@@ -33,9 +33,9 @@ if (isset($_POST['edit'])) {
   $name = $_POST['name'];
   $is_active = $_POST['is_active'];
 
-  $qUpdate = mysqli_query($koneksi, "UPDATE majors SET name='$name', is_active='$is_active' WHERE id = $id");
+  $qUpdate = mysqli_query($koneksi, "UPDATE roles SET name='$name', is_active='$is_active' WHERE id = $id");
   if ($qUpdate){
-    header("Location: major_adm.php");
+    header("Location: role.php");
   }
 }
 
@@ -53,7 +53,7 @@ if (isset($_POST['edit'])) {
   <!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-  <?php include "../admin/inc/sidebar.php"; ?>
+  <?php  include "../inc/sidebar.php"; ?>
   <!-- End Sidebar-->
 
   <main id="main" class="main">
@@ -75,7 +75,7 @@ if (isset($_POST['edit'])) {
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title"><?php echo isset($_GET['Edit']) ? 'Edit ' : 'Create New' .' '?>MAJORS</h5>
+              <h5 class="card-title"><?php echo isset($_GET['Edit']) ? 'Edit ' : 'Create New' .' '?>ROles</h5>
               <form action="" method="post" enctype="multipart/form-data">
                 <div class="row mb-3">
                   <div class="col-sm-2">

@@ -19,15 +19,31 @@ if (empty($_SESSION['EMAIL'])) {
     header("Location: ../login.php");
 }
 
+$user = mysqli_query($koneksi, "SELECT 
+    u.id AS user_id,
+    u.name AS user_name,
+    u.id,
+    u.email,
+    u.password,
+    u.is_active,
+    r.name AS role_name
+
+    FROM users AS u
+    LEFT JOIN 
+        user_role AS ur ON u.id = ur.user_id
+    LEFT JOIN
+        roles AS r ON ur.role_id = r.id
+    ORDER BY 
+        u.id DESC");
+
+$rows = mysqli_fetch_all($user, MYSQLI_ASSOC);
+
+
+
+// Query untuk mengambil semua roles tetap diperlukan jika anda membutuhkannya untuk keperluan lain di halaman ini
+
 $role = mysqli_query($koneksi, "SELECT * FROM roles");
-$rows = mysqli_fetch_all($role, MYSQLI_ASSOC);
-
-$userRole = mysqli_query($koneksi, "SELECT * FROM user_role");
-$rowURoles = mysqli_fetch_all($userRole, MYSQLI_ASSOC);
-
-$user = mysqli_query($koneksi, "SELECT * FROM users");
-$rowUsers = mysqli_fetch_all($user, MYSQLI_ASSOC);
-
+$rowRoles = mysqli_fetch_all($role, MYSQLI_ASSOC);
 
 
 if (isset($_GET['idDel'])) {
@@ -35,9 +51,9 @@ if (isset($_GET['idDel'])) {
     $id = $_GET['idDel'];
 
 
-    $del = mysqli_query($koneksi, "DELETE FROM roles WHERE id = $id");
+    $del = mysqli_query($koneksi, "DELETE FROM users WHERE id = $id");
     if ($del) {
-        header("Location: role.php");
+        header("Location: user.php");
     }
 }
 
@@ -59,6 +75,17 @@ if (isset($_GET['idDel'])) {
 
     <main id="main" class="main">
 
+        <div class="pagetitle">
+            <h1>Admin</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="dashboard.php">Admin</a></li>
+                    <li class="breadcrumb-item">Pages</li>
+                    <li class="breadcrumb-item active">Blank</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
@@ -67,13 +94,16 @@ if (isset($_GET['idDel'])) {
                     </div>
                     <div class="card-body">
                         <div align="right" class="mb-3 mt-3">
-                            <a href="edit-role.php" class="btn btn-primary">Create</a>
+                            <a href="edit-user.php" class="btn btn-primary">Create New User</a>
                         </div>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Role</th>
                                     <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>Password</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -83,14 +113,17 @@ if (isset($_GET['idDel'])) {
                                 foreach ($rows as $row): ?>
                                     <tr>
                                         <td><?php echo $no++ ?></td>
-                                        <td><?php echo $row['name'] ?></td>
+                                        <td><?php echo $row['role_name'] ?></td>
+                                        <td><?php echo $row['user_name'] ?></td>
+                                        <td><?php echo $row['email'] ?></td>
+                                        <td><?php echo $row['password'] ?></td>
                                         <td><?php echo $row['is_active'] ?></td>
                                         <td>
-                                          
+                                            <a href="add-roleUser.php" class="btn btn-primary btn-sm">Add Role</a>
                                             <a href="edit-user.php?Edit=<?php echo $row['id'] ?>"
-                                                class="btn btn-success btn-sm"><i class="bi bi-eye-fill"></i></a>
+                                                class="btn btn-success btn-sm"><i class="bi bi-pencil-fill"></i></a>
                                             <a onclick="return confirm ('Yakin ingin menghapus?')"
-                                                href="role.php?idDel=<?php echo $row['id'] ?>"
+                                                href="user.php?idDel=<?php echo $row['id'] ?>"
                                                 class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                                         </td>
                                     </tr>
@@ -100,8 +133,6 @@ if (isset($_GET['idDel'])) {
                     </div>
                 </div>
             </div>
-
-            
         </div>
 
     </main>

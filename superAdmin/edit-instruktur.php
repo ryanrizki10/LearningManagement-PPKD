@@ -27,7 +27,7 @@ if (isset($_POST['save'])) {
     
     $insert = mysqli_query($koneksi, "INSERT INTO instructors (`majors_id`, `user_id`, `title`, `gender`, `address`, `phone`, `is_active`, `photo`) VALUES ('$major_id', '$user_id', '$title', '$gender', '$address', '$phone', '$status', '$fileName')");
     if ($insert) {
-      header("Location: instruktur_adm.php");
+      header("Location: instruktur.php");
     }
     
   }
@@ -69,7 +69,7 @@ if (isset($_POST['edit'])) {
   
   $qUpdate = mysqli_query($koneksi, "UPDATE instructors SET $fillQupdate majors_id='$major_id', user_id='$user_id', title='$title', gender='$gender', address='$address', phone='$phone', is_active='$status'  WHERE id = $id");
   if ($qUpdate){
-    header("Location: instruktur_adm.php");
+    header("Location: instruktur.php");
   }
 }
 
@@ -94,7 +94,7 @@ $rowUsers = mysqli_fetch_all($user, MYSQLI_ASSOC);
   <!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-  <?php include "../admin/inc/sidebar.php"; ?>
+  <?php  include "../inc/sidebar.php"; ?>
   <!-- End Sidebar-->
 
   <main id="main" class="main">
